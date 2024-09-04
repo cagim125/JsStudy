@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="main.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+  <div class="black-bg">
+    <div class="white-bg">
+      <h4>로그인하세요</h4>
+      <form action="success.html">
+        <div class="my-3">
+          <input id="username" name="username" type="text" placeholder="ID or Email" class="form-control">
+        </div>
+        <div class="my-3">
+          <input id="password" name="password" type="password" placeholder="PassWord" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">전송</button>
+        <button type="button" class="btn btn-danger" id="close">닫기</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Nav Start -->
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand">Navbar</span>
+      <span id="toggleMode" class="badge bg-dark">Dark 🔄</span>
+      <button class="navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <ul class="list-group">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+    <li class="list-group-item">A fourth item</li>
+    <li class="list-group-item">And a fifth one</li>
+  </ul>
+  <!-- Nav End -->
+
+  <!-- 슬라이드 start -->
+  <div style="overflow: hidden;">
+    <div class="slice-container">
+      <div class="slide-box">
+        <img src="images/images1.png" alt="image" style="width: 100%; height: 150px;" />
+      </div>
+      <div class="slide-box">
+        <img src="images/images2.png" alt="image" style="width: 100%; height: 150px;" />
+      </div>
+      <div class="slide-box">
+        <img src="images/images3.png" alt="image" style="width: 100%; height: 150px;" />
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="slide-btn before">이전</button>
+    <button class="slide-btn slide-1">1</button>
+    <button class="slide-btn slide-2">2</button>
+    <button class="slide-btn slide-3">3</button>
+    <button class="slide-btn next">다음</button>
+  </div>
+  <!-- 슬라이드 Eed -->
+
+  <script>
+    var 현재사진 = 1;
+
+    $(".slide-1").on('click', () => {
+      $(".slice-container").css("transform", "translateX(0vw)");
+      현재사진 = 1;
+    });
+    $(".slide-2").on('click', () => {
+      $(".slice-container").css("transform", "translateX(-100vw)");
+      현재사진 = 2;
+    });
+    $(".slide-3").on('click', () => {
+      $(".slice-container").css("transform", "translateX(-200vw)");
+      현재사진 = 3;
+    });
+
+    $(".before").on('click', () => {
+      // 3 = -100vw
+      // 2 = 0vw
+      if (현재사진 > 1) {
+        현재사진 -= 1;
+        $(".slice-container").css("transform", "translateX(-" + (현재사진 - 1) * 100 + "vw)");
+      }
+    })
+
+    $(".next").on('click', () => {
+      // 2 = -100vw
+      // 3 = -200vw
+      현재사진 += 1;
+      $(".slice-container").css("transform", "translateX(-" + (현재사진 -1) * 100 + "vw)");
+      
+    })
+  </script>
+
+  <div class="alert-box" id="alert">
+    <p id="title">알림창임</p>
+    <button onclick="toggleAlert('','none')">닫기</button>
+  </div>
+
+  <button id="loginBtn" class="common-btn">로그인</button>
+  <button onclick="toggleAlert('기본알림창', 'block')" class="common-btn">버튼</button>
+  <button onclick="toggleAlert('아이디입력하셈', 'block')" class="common-btn">아디</button>
+  <button onclick="toggleAlert('비밀번호입력하셈', 'block')" class="common-btn">비번</button>
+
+  <p class="hello">아녕</p>
+  <button class="test-btn">테스트 버튼</button>
+
+  <!-- 
+  <p>태조 이성계가 태어난 년도는?</p>
+  <input type="text" id="answer">
+  <button id="send-answer">제출</button> 
+  -->
+
+  <div class="alert alert-danger">
+    <span id="num">5</span>초 이내 구매시 사은품 증정!
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    var i = 5;
+
+    const interval = setInterval(() => {
+      $("#num").html(i);
+      i--;
+    }, 950);
+
+    setTimeout(() => {
+      clearInterval(interval);
+      $(".alert-danger").hide();
+    }, 5800);
+
+
+    var count = 0;
+    $("#send-answer").on('click', function() {
+      if (count === 3) {
+        alert("멍청이");
+        return;
+      }
+
+      if ("1335" == $("#answer").val()) {
+        alert("정답");
+        count = 0;
+      } else {
+        alert('틀렸습니다 다시 입력하세요.');
+        $("#answer").val('');
+        $("#answer").focus();
+        count += 1;
+      }
+    })
+
+    var count = 0;
+    $('#toggleMode').on('click', function() {
+      count++;
+      console.log(count);
+      if (count % 2 === 0) {
+        $('#toggleMode').html('Dark 🔄');
+        $('#toggleMode').css('color', 'white !important')
+        $('#toggleMode').css('backgroundColor', 'black !important');
+      } else {
+        $('#toggleMode').html('Light 🔄');
+        $('#toggleMode').css('color', 'black !important')
+        $('#toggleMode').css('backgroundColor', 'white !importants');
+      }
+    })
+
+    $('.test-btn').on('click', function() {
+      $('.hello').html('아녕 바보');
+      $('.hello').css('color', 'salmon');
+      $('.hello').css('fontSize', '18px');
+      $('.hello').slideUp();
+    });
+
+    $('#close').on('click', function() {
+      $('.black-bg').toggleClass('show-modal');
+    })
+
+    $('#loginBtn').on('click', function() {
+      $('.black-bg').toggleClass('show-modal');
+    })
+
+    $('#username').on('change', function() {
+      console.log("변경 됨");
+    })
+
+    $('form').on('submit', function(e) {
+      e.preventDefault();
+
+      let username = $('#username').val();
+      let password = $('#password').val();
+
+      if (username == '') {
+        alert("아이디를 입력해주세요.");
+        $('#username').focus();
+        return;
+      } else if (!/\S+@\S+\.\S+/.test(username)) {
+        alert("이메일 형식이 틀려요.");
+        return;
+      }
+
+      // cagim30@gmail.com
+
+      if (password == '') {
+        alert("비밀번호를 입력해주세요.");
+        $('#password').focus();
+        return;
+      } else if (password.length < 6) {
+        alert("비밀번호는 6자리 이상 입력해주세요.");
+        $('#password').focus();
+        return;
+      } else if (!/[A-Z]/.test(password)) {
+        alert("대문자를 하나 이상 포함 시켜주세요.");
+        return;
+      }
+
+      this.submit();
+
+    })
+
+
+    let alertBox = document.querySelector('#alert');
+    let titleElement = document.querySelector('#title');
+
+    function toggleAlert(newTitle, toggle) {
+      alertBox.style.display = toggle;
+      titleElement.innerHTML = newTitle;
+    };
+
+    // console.log(document.querySelector('.navbar-toggler'));
+
+    document.querySelector('.navbar-toggler').addEventListener('click', function() {
+      document.querySelector('.list-group').classList.toggle('show');
+    });
+
+    function 삼육구게임(maxNumber) {
+      for (let i = 1; i <= maxNumber; i++) {
+        let lastDigit = i % 10;
+        let tensDigit = Math.floor(i / 10) % 10;
+
+        if (lastDigit === 3 || lastDigit === 6 || lastDigit === 9 | tensDigit === 3) {
+          console.log(i + "박수!");
+        } else {
+          console.log(i);
+        }
+      }
+    }
+
+    function 합격여부(num1, num2) {
+      if (num1 < 0 || num1 > 100) {
+        alert("숫자는 1부터 100사이의 값만 입력해주세요.");
+        return;
+      }
+
+      if (num2 < 0 || num2 > 100) {
+        alert("숫자는 1부터 100사이의 값만 입력해주세요.");
+        return;
+      }
+
+      if (num1 <= 40 || num2 <= 40) {
+        console.log("과락으로 인한 불합격 입니다.");
+        return;
+      }
+
+      if ((num1 + num2) >= 120) {
+        console.log('합격입니다.');
+      } else {
+        console.log("불합격입니다.")
+      }
+    }
+  </script>
+
+</body>
+
+</html>
