@@ -88,6 +88,24 @@
   <!-- 슬라이드 End -->
 
   <script>
+    $(".black-bg").on('click', (e) => {
+      console.log(e.target)
+      console.log(e.currentTarget);
+
+      // if (e.target == $(".black-bg").get(0)) {
+      //   $('.black-bg').removeClass('show-modal');
+      // }
+      if ($(e.target).is($(".black-bg"))){
+        $('.black-bg').removeClass('show-modal');
+      }
+    })
+
+    $(".white-bg").on('click', (e) => {
+      e.stopPropagation();
+    })
+
+
+
     var 현재사진 = 1;
 
     $(".slide-1").on('click', () => {
@@ -104,8 +122,8 @@
     });
 
     $(".before").on('click', () => {
-      // 3 -> 2= -100vw
-      // 2 -> 1= 0vw
+      // 3 -> 2 = -100vw
+      // 2 -> 1 = 0vw
       if (현재사진 > 1) {
         현재사진 -= 1;
         $(".slice-container").css("transform", "translateX(-" + (현재사진 - 1) * 100 + "vw)");
@@ -156,8 +174,9 @@
       let scrollT = $('.lorem').scrollTop(); // 현재 스크롤 양
       let divH = $('.lorem').height(); // clientHeight (div 높이)
       let scrollH = $('.lorem').prop('scrollHeight'); // scrollHeight (실제 높이)
+      
 
-      if ( scrollT + divH == scrollH) {
+      if ( scrollT + divH >= scrollH - 10) {
         alert("끝까지 읽으셨습니다.");
       }
     })

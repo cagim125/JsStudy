@@ -29,6 +29,7 @@ body {
     background: white;
     border-radius: 5px;
     padding: 30px;
+    margin-top: 71px;
 }
 .show-modal {
     visibility: visible;
@@ -48,6 +49,7 @@ body {
 
 .slice-container {
     width: 300vw;
+    margin-top: 72px;
     transition: all 1s;
 }
 .slide-box {
