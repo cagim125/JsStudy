@@ -61,6 +61,7 @@
         <img src="https://via.placeholder.com/600" class="w-100">
         <h5>${a.title}</h5>
         <p>${a.price.toLocaleString('ko-Kr')}원</p>
+        <button class="buy btn btn-info">구매</button>
       </div>
     `
         row.append(템플릿);
@@ -125,13 +126,34 @@
       템플릿1(newPrice);
     })
 
-    var 어레이 = [7, 3, 5, 2, 40];
+    $(".buy").on('click', (e) => {
+      //JQuery
+      // let title = $(e.target).siblings('h5').text();
+      // JS
+      let title = e.target.previousElementSibling.previousElementSibling.textContent
+      console.log(title)
 
-    var 새어레이 = 어레이.filter(function (a) {
-      return a < 4
-    });
+      let cart;
 
-    console.log(새어레이);
+      if (localStorage.getItem('cart') == null) {
+        cart = new Array;
+      } else {
+        cart = JSON.parse(localStorage.getItem('cart')) || [];
+      }
+
+      let existingItem = cart.find(item => item.title === title);
+
+      if (existingItem) {
+        existingItem.num += 1;
+
+      } else {
+        const cartObject = { title: title, num: 1 };
+        cart.push(cartObject);
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+    })
 
 
 
