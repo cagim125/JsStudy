@@ -50,7 +50,7 @@ body {
 .slice-container {
     width: 300vw;
     margin-top: 72px;
-    transition: all 1s;
+    /* transition: all 1s; */
 }
 .slide-box {
     float: left;
