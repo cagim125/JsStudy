@@ -37,6 +37,39 @@
     </div>
   </div>
 
+  <div class="container my-3">
+    <h4>최종가격</h4>
+    <p class="final-price"></p>
+    <button class="buy">구매하기</button>
+  </div>
+
+  <div class="modal1" style="display: none;">
+    <div class="white-bg">
+      <h4>성함</h4>
+      <input type="text" id="name">
+      <h4>연락처</h4>
+      <input type="text" id="phone">
+      <button class="show-receipt">입력완료</button>
+      <div>
+        <button class="close">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal2" style="display: none;">
+    <div class="white-bg">
+      <h4>영수증</h4>
+      <canvas id="canvas" width="350" height="350"></canvas>
+      <div>
+        <button class="close">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal2">
+    <canvas id="canvas" width="350" height="350"></canvas>
+  </div>
+
   <script>
     let products = [];
     let cart = [];
@@ -93,17 +126,87 @@
               <input type="number" value="${a.count}" class="item-count w-100">
             </div>
           `);
-
         });
+
+        가격계산();
+
+        $('.item-count').on('input', () => {
+          가격계산();
+        })
       });
 
+      $('.item').on('dragstart', (e) => {
+        e.originalEvent.dataTransfer.setData("id", e.target.dataset.id);
+      })
 
 
+      $(".basket").on('dragover', (e) => {
+        e.preventDefault();
+      })
 
+      $(".basket").on('drop', (e) => {
+        let productId = e.originalEvent.dataTransfer.getData("id");
+        console.log(productId);
+
+        $('.add').eq(productId).click();
+      })
 
     }).catch(error => {
       console.log("Error loading JSON file", error);
     })
+
+
+    function 가격계산() {
+      let finalPrice = 0;
+      for (let i = 0; i < $('.item-count').length; i++) {
+        let count = $('.item-count').eq(i).val();
+        let price = $('.item-count').eq(i).siblings('p').text();
+
+        finalPrice += parseFloat(price * count);
+      }
+
+      $(".final-price").html('합계 ' + finalPrice);
+    }
+
+    $('.buy').on('click', () => {
+      $('.modal1').css('display', 'block');
+    })
+
+    $('.close').on('click', () => {
+      console.log('close');
+      $('.modal1').css('display', 'none');
+    })
+
+    let 성함 = '';
+    let 연락처 = '';
+
+    $('#name').on('input', function () {
+      성함 = $('#name').val();
+    });
+
+    $('#phone').on('input', function () {
+      연락처 = $('#phone').val();
+    });
+
+    $('.show-receipt').on('click', () => {
+      $('.modal1').css('display', 'none');
+      $('.modal2').css('display', 'block');
+
+      var canvas = document.getElementById('canvas');
+      var c = canvas.getContext('2d');
+      c.font = '16px dotum';
+      c.fillText('구매자 : ' + 성함, 20, 30);
+      c.fillText('연락처 : ' + 연락처, 20, 60);
+      
+
+      for (let i = 0; i < cart.length; i++) {
+        c.fillText(cart[i].title , 20, 120);
+        c.fillText(cart[i].brand , 20, 140);
+        c.fillText(cart[i].price, 20, 160);
+      }
+      c.fillText($('.final-price').html(), 20, 180);
+    })
+
 
 
     $("#search").on('input', (e) => {
